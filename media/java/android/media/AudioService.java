@@ -538,6 +538,8 @@ public class AudioService extends IAudioService.Stub {
 
     private AudioOrientationEventListener mOrientationListener;
 
+    private int mVolumeKeysDefault;
+
     ///////////////////////////////////////////////////////////////////////////
     // Construction
     ///////////////////////////////////////////////////////////////////////////
@@ -1002,6 +1004,9 @@ public class AudioService extends IAudioService.Stub {
         mLinkNotificationWithVolume = Settings.Secure.getInt(cr,
                 Settings.Secure.VOLUME_LINK_NOTIFICATION, 1) == 1;
 
+        mVolumeKeysDefault = Settings.System.getInt(cr,
+                Settings.System.VOLUME_KEYS_DEFAULT, 1);
+
         mMuteAffectedStreams = System.getIntForUser(cr,
                 System.MUTE_STREAMS_AFFECTED,
                 ((1 << AudioSystem.STREAM_MUSIC)|
@@ -1080,8 +1085,10 @@ public class AudioService extends IAudioService.Stub {
         }
         final int resolvedStream = mStreamVolumeAlias[streamType];
 
+        if (streamType == AudioSystem.STREAM_DEFAULT) {
+            return;
         // Play sounds on STREAM_RING only.
-        if ((flags & AudioManager.FLAG_PLAY_SOUND) != 0 &&
+        } else if ((flags & AudioManager.FLAG_PLAY_SOUND) != 0 &&
                 resolvedStream != AudioSystem.STREAM_RING) {
             flags &= ~AudioManager.FLAG_PLAY_SOUND;
         }
@@ -3279,10 +3286,22 @@ public class AudioService extends IAudioService.Stub {
                     if (DEBUG_VOL)
                         Log.v(TAG, "getActiveStreamType: Forcing STREAM_MUSIC stream active");
                     return AudioSystem.STREAM_MUSIC;
-                    } else {
-                        if (DEBUG_VOL)
-                            Log.v(TAG, "getActiveStreamType: Forcing STREAM_RING b/c default");
-                        return AudioSystem.STREAM_RING;
+                } else {
+                    switch (mVolumeKeysDefault) {
+                        case AudioSystem.STREAM_DEFAULT:
+                            if (DEBUG_VOL)
+                                Log.v(TAG, "getActiveStreamType: Forcing STREAM_DEFAULT b/c default setting");
+                            return AudioSystem.STREAM_DEFAULT;
+                        case AudioSystem.STREAM_MUSIC:
+                            if (DEBUG_VOL)
+                                Log.v(TAG, "getActiveStreamType: Forcing STREAM_MUSIC b/c default setting");
+                            return AudioSystem.STREAM_MUSIC;
+                        case AudioSystem.STREAM_RING:
+                        default:
+                            if (DEBUG_VOL)
+                                Log.v(TAG, "getActiveStreamType: Forcing STREAM_RING b/c default");
+                            return AudioSystem.STREAM_RING;
+                    }
                 }
             } else if (isAfMusicActiveRecently(0)) {
                 if (DEBUG_VOL)
@@ -3324,9 +3343,23 @@ public class AudioService extends IAudioService.Stub {
             }
             break;
         }
-        if (DEBUG_VOL) Log.v(TAG, "getActiveStreamType: Returning suggested type "
-                + suggestedStreamType);
-        return suggestedStreamType;
+        if (suggestedStreamType == AudioManager.USE_DEFAULT_STREAM_TYPE) {
+            switch (mVolumeKeysDefault) {
+                case AudioSystem.STREAM_DEFAULT:
+                    if (DEBUG_VOL)
+                        Log.v(TAG, "getActiveStreamType: Forcing STREAM_DEFAULT b/c default setting");
+                    return AudioSystem.STREAM_DEFAULT;
+                case AudioSystem.STREAM_MUSIC:
+                default:
+                    if (DEBUG_VOL)
+                        Log.v(TAG, "getActiveStreamType: Forcing STREAM_MUSIC b/c default setting");
+                    return AudioSystem.STREAM_MUSIC;
+            }
+        } else {
+            if (DEBUG_VOL) Log.v(TAG, "getActiveStreamType: Returning suggested type "
+                    + suggestedStreamType);
+            return suggestedStreamType;
+        }
     }
 
     private void broadcastRingerMode(int ringerMode) {
@@ -4419,6 +4452,8 @@ public class AudioService extends IAudioService.Stub {
                 Settings.System.MODE_RINGER_STREAMS_AFFECTED), false, this);
             mContentResolver.registerContentObserver(Settings.Global.getUriFor(
                 Settings.Global.DOCK_AUDIO_MEDIA_ENABLED), false, this);
+            mContentResolver.registerContentObserver(Settings.System.getUriFor(
+                Settings.System.VOLUME_KEYS_DEFAULT), false, this);
         }
 
         @Override
@@ -4445,6 +4480,9 @@ public class AudioService extends IAudioService.Stub {
                 } else {
                     mStreamVolumeAlias[AudioSystem.STREAM_NOTIFICATION] = AudioSystem.STREAM_NOTIFICATION;
                 }
+
+                mVolumeKeysDefault = Settings.System.getInt(mContentResolver,
+                        Settings.System.VOLUME_KEYS_DEFAULT, 1);
             }
         }
     }
