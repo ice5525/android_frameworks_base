@@ -3692,6 +3692,12 @@ public final class Settings {
         public static final String ANIMATION_CONTROLS_DURATION = "animation_controls_duration";
 
         /**
+         * Toast animations
+         *
+         */
+        public static final String TOAST_ANIMATION = "toast_animation";
+
+        /**
          * Width and height of output vide expressed in WxH
          * @hide
          */
