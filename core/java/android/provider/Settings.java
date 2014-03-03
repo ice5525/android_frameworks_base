@@ -3592,6 +3592,12 @@ public final class Settings {
          */
         public static final String HEADS_UP_SHOW_STATUS_BUTTON = "heads_up_show_status_button";
 
+        /**
+         * Locale for secondary overlay on dialer for t9 search input
+         * @hide
+         */
+        public static final String T9_SEARCH_INPUT_LOCALE = "t9_search_input_locale";
+
         /**  
          * AOKP Custom System Animations
          * @hide
@@ -3612,10 +3618,11 @@ public final class Settings {
         public static final String ANIMATION_CONTROLS_DURATION = "animation_controls_duration";
 
         /**
-         * Locale for secondary overlay on dialer for t9 search input
+         * Toast animations
+         *
          * @hide
          */
-        public static final String T9_SEARCH_INPUT_LOCALE = "t9_search_input_locale";
+        public static final String TOAST_ANIMATION = "toast_animation";
 
         /**
          * Settings to backup. This is here so that it's in the same place as the settings
