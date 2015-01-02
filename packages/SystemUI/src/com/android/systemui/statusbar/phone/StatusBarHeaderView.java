@@ -1005,7 +1005,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 
             mShowBatteryTextExpanded = showExpandedBatteryPercentage;
             mShowWeather = Settings.System.getInt(
-                    resolver, Settings.System.STATUS_BAR_SHOW_WEATHER, 1) == 1;
+                    resolver, Settings.System.STATUS_BAR_SHOW_WEATHER, 0) == 1;
             mHeadsUpEnabled = Settings.System.getInt(
                     resolver, Settings.System.HEADS_UP_NOTIFICATION, 1) == 1;
             updateVisibilities();
