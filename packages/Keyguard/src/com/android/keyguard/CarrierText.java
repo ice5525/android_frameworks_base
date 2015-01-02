@@ -239,9 +239,7 @@ public class CarrierText extends LinearLayout {
                 // This depends on mPlmn containing the text "Emergency calls only" when the radio
                 // has some connectivity. Otherwise, it should be null or empty and just show
                 // "No SIM card"
-                carrierText =  makeCarrierStringOnEmergencyCapable(
-                        getContext().getText(R.string.keyguard_missing_sim_message_short),
-                        plmn);
+                carrierText = getContext().getText(R.string.keyguard_missing_sim_message_short);
                 break;
 
             case SimPermDisabled:
