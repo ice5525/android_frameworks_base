@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-/* Copyright 2014, Euphoria-OS project
+/* //device/apps/common/assets/res/any/strings.xml
+**
+** Copyright 2014, Euphoria-OS Project
+** Copyright 2013, The ChameleonOS Open Source Project
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -15,12 +18,8 @@
 ** limitations under the License.
 */
 -->
-<resources>
-  <!-- Doze mode -->
-  <java-symbol type="bool" name="config_doze_enabled_by_default" />
-
-  <!-- Screen record -->
-  <java-symbol type="drawable" name="ic_lock_screen_record" />
-  <java-symbol type="string" name="global_action_screen_record" />
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- label for screen record item in phone options dialog -->
+    <string name="global_action_screen_record">Registra schermo</string>
 
 </resources>

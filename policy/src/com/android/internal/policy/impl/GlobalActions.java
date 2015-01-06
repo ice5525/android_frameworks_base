@@ -21,8 +21,8 @@ import com.android.internal.app.AlertController;
 import com.android.internal.app.AlertController.AlertParams;
 import com.android.internal.telephony.TelephonyIntents;
 import com.android.internal.telephony.TelephonyProperties;
-import com.android.internal.R;
 import com.android.internal.util.UserIcons;
+import com.android.internal.R;
 import com.android.internal.widget.LockPatternUtils;
 
 import android.app.ActivityManager;
@@ -319,6 +319,8 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                 mItems.add(new RebootAction());
             } else if (GLOBAL_ACTION_KEY_SCREENSHOT.equals(actionKey)) {
                 mItems.add(getScreenshotAction());
+            } else if (GLOBAL_ACTION_KEY_SCREENRECORD.equals(actionKey)) {
+                mItems.add(getScreenRecordAction());
             } else if (GLOBAL_ACTION_KEY_AIRPLANE.equals(actionKey)) {
                 mItems.add(mAirplaneModeOn);
             } else if (GLOBAL_ACTION_KEY_BUGREPORT.equals(actionKey)) {
@@ -561,6 +563,24 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
         };
     }
 
+    private Action getScreenRecordAction() {
+        return new SinglePressAction(com.android.internal.R.drawable.ic_lock_screen_record,
+                R.string.global_action_screen_record) {
+
+            public void onPress() {
+                toggleScreenRecord();
+            }
+
+            public boolean showDuringKeyguard() {
+                return true;
+            }
+
+            public boolean showBeforeProvisioning() {
+                return true;
+            }
+        };
+    }
+
     private Action getBugReportAction() {
         return new SinglePressAction(com.android.internal.R.drawable.ic_lock_bugreport,
                 R.string.bugreport_title) {
@@ -697,7 +717,6 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                     }
                     avatar = new BitmapDrawable(mContext.getResources(),
                             createCircularClip(rawAvatar, avatarSize, avatarSize));
-
                     SinglePressAction switchToUser = new SinglePressAction(
                             com.android.internal.R.drawable.ic_lock_user, avatar,
                             (user.name != null ? user.name : "Primary")) {
@@ -809,6 +828,11 @@ class GlobalActions implements DialogInterface.OnDismissListener, DialogInterfac
                 mHandler.postDelayed(mScreenshotTimeout, 10000);
             }
         }
+    }
+
+    private void toggleScreenRecord() {
+        final Intent recordIntent = new Intent("org.chameleonos.action.NOTIFY_RECORD_SERVICE");
+        mContext.sendBroadcast(recordIntent, Manifest.permission.RECORD_SCREEN);
     }
 
     private void prepareDialog() {
