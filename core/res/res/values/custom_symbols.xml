@@ -257,4 +257,7 @@
   <java-symbol type="string" name="usb_media_removed" />
   <java-symbol type="string" name="usb_media_shared" />
 
+  <!-- Doze Settings -->
+  <java-symbol type="bool" name="config_dozeUseAccelerometer" />
+
 </resources>
