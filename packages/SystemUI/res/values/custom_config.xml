@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-/* Copyright (c) 2013, The Linux Foundation. All rights reserved.
-** Not a Contribution.
+/* //device/apps/common/assets/res/any/strings.xml
 **
-** Copyright 2014, Euphoria-OS Project
+** Copyright 2014, Euphoria-OS project
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
 ** you may not use this file except in compliance with the License.
@@ -19,10 +18,10 @@
 */
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <!-- Wether doze feature is enabled by default in settings. -->
-    <bool name="config_doze_enabled_by_default">true</bool>
 
-    <!-- Doze: force using accelerometer as pick up sensor -->
-    <bool name="config_dozeUseAccelerometer">false</bool>
+    <!-- Whether to enable to show task manager or not -->
+    <bool name="config_showTaskManagerSwitcher">false</bool>
 
+    <!-- Doze: shake accelerometer threshold minimum is 2 and maximum is 10-->
+    <integer name="doze_shake_accelerometer_threshold">10</integer>
 </resources>
