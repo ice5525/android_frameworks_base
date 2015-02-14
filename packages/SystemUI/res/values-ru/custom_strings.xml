@@ -24,4 +24,15 @@
     <!-- Heads up toast -->
     <string name="heads_up_enabled">\"Всплывающие уведомления\" включены</string>
     <string name="heads_up_disabled">\"Всплывающие уведомления\" отключены</string>
+
+    <!-- Quick settings -->
+    <string name="quick_settings_battery_saver">Энергосбережение</string>
+    <string name="quick_settings_battery_saver_off">Энергосбережение выкл</string>
+    <string name="quick_settings_brightness">Яркость</string>
+    <string name="quick_settings_expanded_desktop">Расширенный</string>
+    <string name="quick_settings_expanded_desktop_off">Обычный</string>
+    <string name="quick_settings_screen_off">Выключить экран</string>
+    <string name="quick_settings_screenshot">Скриншот</string>
+    <string name="quick_settings_sync">Синхронизация</string>
+    <string name="quick_settings_sync_off">Синхронизация выкл</string>
 </resources>
