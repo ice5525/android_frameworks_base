@@ -230,4 +230,8 @@
   <java-symbol type="style" name="Animation.Toast.SlideRightLeft" />
   <java-symbol type="style" name="Animation.Toast.SlideLeftRight" />
 
+  <!-- Storage -->
+  <java-symbol type="string" name="storage_usb" />
+  <java-symbol type="string" name="storage_uicc" />
+
 </resources>
