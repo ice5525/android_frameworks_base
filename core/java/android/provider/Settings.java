@@ -6173,7 +6173,7 @@ public final class Settings {
          */
         public static final String SEARCH_PANEL_ENABLED = "search_panel_enabled";
 
-        /*
+        /**
          * String to contain power menu actions
          * @hide
          */
