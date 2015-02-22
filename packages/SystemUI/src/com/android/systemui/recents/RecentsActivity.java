@@ -186,8 +186,9 @@ public class RecentsActivity extends Activity implements RecentsView.RecentsView
      * Enable/disable recents search widget.
      */
     private boolean isRecentsSearchbarEnabled() {
-        boolean recentsSearchbarEnabled = Settings.System.getInt(
-            getContentResolver(), Settings.System.RECENTS_SEARCH_BAR, 1) == 1;
+        boolean recentsSearchbarEnabled = Settings.System.getIntForUser(
+            getContentResolver(), Settings.System.RECENTS_SEARCH_BAR,
+                1, UserHandle.USER_CURRENT) == 1;
 
         // Update search bar space height
         Resources res = getResources();

@@ -286,15 +286,12 @@ public abstract class BaseStatusBar extends SystemUI implements
 
         public void observe() {
             ContentResolver resolver = mContext.getContentResolver();
-            resolver.registerContentObserver(
-                    Settings.System.getUriFor(Settings.System.HEADS_UP_CUSTOM_VALUES),
-                    false, this);
-            resolver.registerContentObserver(
-                    Settings.System.getUriFor(Settings.System.HEADS_UP_BLACKLIST_VALUES),
-                    false, this);
-            resolver.registerContentObserver(
-                    Settings.Secure.getUriFor(Settings.Secure.SEARCH_PANEL_ENABLED),
-                    false, this);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                Settings.System.HEADS_UP_CUSTOM_VALUES), false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                Settings.System.HEADS_UP_BLACKLIST_VALUES), false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                Settings.Secure.SEARCH_PANEL_ENABLED), false, this, UserHandle.USER_ALL);
             update();
         }
 
@@ -305,15 +302,15 @@ public abstract class BaseStatusBar extends SystemUI implements
 
         private void update() {
             ContentResolver resolver = mContext.getContentResolver();
-            final String dndString = Settings.System.getString(mContext.getContentResolver(),
-                    Settings.System.HEADS_UP_CUSTOM_VALUES);
-            final String blackString = Settings.System.getString(mContext.getContentResolver(),
-                    Settings.System.HEADS_UP_BLACKLIST_VALUES);
+            final String dndString = Settings.System.getStringForUser(resolver,
+                    Settings.System.HEADS_UP_CUSTOM_VALUES, UserHandle.USER_CURRENT);
+            final String blackString = Settings.System.getStringForUser(resolver,
+                    Settings.System.HEADS_UP_BLACKLIST_VALUES, UserHandle.USER_CURRENT);
             splitAndAddToArrayList(mDndList, dndString, "\\|");
             splitAndAddToArrayList(mBlacklist, blackString, "\\|");
 
-            mSearchPanelViewEnabled = Settings.Secure.getInt(
-                    resolver, Settings.Secure.SEARCH_PANEL_ENABLED, 1) == 1;
+            mSearchPanelViewEnabled = Settings.Secure.getIntForUser(resolver,
+                    Settings.Secure.SEARCH_PANEL_ENABLED, 0, UserHandle.USER_CURRENT) != 0;
         }
     };
 

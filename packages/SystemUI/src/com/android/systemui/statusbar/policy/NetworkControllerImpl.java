@@ -41,6 +41,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Messenger;
+import android.os.UserHandle;
 import android.provider.Settings;
 import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
@@ -299,8 +300,9 @@ public class NetworkControllerImpl extends BroadcastReceiver
     }
 
     private boolean showActivityIcons() {
-        boolean shouldShowActivityIcons = Settings.System.getInt(mContext
-            .getContentResolver(), Settings.System.STATUS_BAR_SHOW_DATA_ACTIVITY, 0) == 1;
+        boolean shouldShowActivityIcons = Settings.System.getIntForUser(
+            mContext.getContentResolver(), Settings.System.STATUS_BAR_SHOW_DATA_ACTIVITY,
+                0, UserHandle.USER_CURRENT) != 0;
         updateDataIcon();
         updateWifiIcons();
         return shouldShowActivityIcons;
