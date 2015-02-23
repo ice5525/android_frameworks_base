@@ -76,7 +76,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // database gets upgraded properly. At a minimum, please confirm that 'upgradeVersion'
     // is properly propagated through your change.  Not doing so will result in a loss of user
     // settings.
-    private static final int DATABASE_VERSION = 119;
+    private static final int DATABASE_VERSION = 120;
 
     private Context mContext;
     private int mUserHandle;
@@ -1938,6 +1938,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             upgradeVersion = 119;
         }
 
+        if (upgradeVersion < 120) {
+            // Migrate from cm-12.0 if there is no entry from cm-11.0
+            db.beginTransaction();
+            SQLiteStatement stmt = null;
+            try {
+                stmt = db.compileStatement("INSERT OR IGNORE INTO secure(name,value)"
+                        + " VALUES(?,?);");
+                int quickPulldown = getIntValueFromSystem(db,
+                        Settings.System.STATUS_BAR_QUICK_QS_PULLDOWN,
+                        R.integer.def_qs_quick_pulldown);
+                loadSetting(stmt, Settings.System.QS_QUICK_PULLDOWN, quickPulldown);
+                db.setTransactionSuccessful();
+            } finally {
+                db.endTransaction();
+                if (stmt != null) stmt.close();
+            }
+            upgradeVersion = 120;
+        }
+
         // *** Remember to update DATABASE_VERSION above!
 
         if (upgradeVersion != currentVersion) {
@@ -2407,6 +2426,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             loadIntegerSetting(stmt, Settings.System.ENABLE_PEOPLE_LOOKUP,
                     R.integer.def_people_lookup);
+
+            loadIntegerSetting(stmt, Settings.System.QS_QUICK_PULLDOWN,
+                    R.integer.def_qs_quick_pulldown);
 
         } finally {
             if (stmt != null) stmt.close();
