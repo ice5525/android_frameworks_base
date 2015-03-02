@@ -669,19 +669,19 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
 
     private void startHeadsUpActivity() {
         Settings.System.putIntForUser(mContext.getContentResolver(),
-            Settings.System.HEADS_UP_NOTIFICATION,
-        mHeadsUpEnabled ? 0 : 1, UserHandle.USER_CURRENT);
+            Settings.System.HEADS_UP_USER_ENABLED,
+        getUserHeadsUpState() ? 0 : 1, UserHandle.USER_CURRENT);
         mActivityStarter.startAction(true /* dismissShade */);
 
         /* show a toast */
         String enabled = mContext.getString(R.string.heads_up_enabled);
         String disabled = mContext.getString(R.string.heads_up_disabled);
         int duration = Toast.LENGTH_SHORT;
-        if (mHeadsUpEnabled) {
-            Toast toast = Toast.makeText(mContext, disabled, duration);
+        if (getUserHeadsUpState()) {
+            Toast toast = Toast.makeText(mContext, enabled, duration);
             toast.show();
         } else {
-            Toast toast = Toast.makeText(mContext, enabled, duration);
+            Toast toast = Toast.makeText(mContext, disabled, duration);
             toast.show();
         }
     }
@@ -1018,7 +1018,7 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
                     Settings.System.STATUS_BAR_SHOW_BATTERY_PERCENT), false, this,
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.HEADS_UP_NOTIFICATION), false, this);
+                    Settings.System.HEADS_UP_SHOW_STATUS_BUTTON), false, this, UserHandle.USER_ALL);
             update();
         }
 
@@ -1050,20 +1050,27 @@ public class StatusBarHeaderView extends RelativeLayout implements View.OnClickL
             }
 
             mShowBatteryTextExpanded = showExpandedBatteryPercentage;
-            mShowWeather = Settings.System.getInt(
-                    resolver, Settings.System.STATUS_BAR_SHOW_WEATHER, 0) == 1;
-            mHeadsUpEnabled = Settings.System.getInt(
-                    resolver, Settings.System.HEADS_UP_NOTIFICATION, 1) == 1;
+            mShowWeather = Settings.System.getIntForUser(
+                    resolver, Settings.System.STATUS_BAR_SHOW_WEATHER, 0, currentUserId) == 1;
+            mShowHeadsUpButton = Settings.System.getIntForUser(
+                    resolver, Settings.System.HEADS_UP_SHOW_STATUS_BUTTON, 0, currentUserId) == 1;
             updateVisibilities();
             requestCaptureValues();
             updateHeadsUpButton();
         }
     }
 
+    private boolean getUserHeadsUpState() {
+         return Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.HEADS_UP_USER_ENABLED,
+                Settings.System.HEADS_UP_USER_ON,
+                UserHandle.USER_CURRENT) != 0;
+    }
+
     private void updateHeadsUpButton() {
         Drawable d = getResources().getDrawable(R.drawable.ic_heads_up);
         ImageView image = (ImageView)findViewById(R.id.heads_up_button);
-        if (mHeadsUpEnabled) {
+        if (getUserHeadsUpState()) {
             image.setImageDrawable(d);
         } else {
             image.setImageDrawable(
