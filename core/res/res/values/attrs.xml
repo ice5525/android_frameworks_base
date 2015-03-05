@@ -6470,6 +6470,7 @@
             <enum name="ring" value="2" />
             <enum name="music" value="3" />
             <enum name="alarm" value="4" />
+            <enum name="notification" value="5" />
         </attr>
     </declare-styleable>
 
