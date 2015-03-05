@@ -1088,7 +1088,9 @@ public class VolumePanel extends Handler implements DemoMode {
     }
 
     private void updateZenPanelVisible() {
-        setZenPanelVisible(mZenModeAvailable && isNotificationOrRing(mActiveStreamType));
+        if (mZenModeAvailable) {
+            setZenPanelVisible(true);
+        }
     }
 
     public void postVolumeChanged(int streamType, int flags) {
