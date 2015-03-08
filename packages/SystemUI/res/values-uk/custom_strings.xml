@@ -22,17 +22,17 @@
     <string name="accessibility_data_connection_HP">HSPA+</string>
 
     <!-- Heads up toast -->
-    <string name="heads_up_enabled">浮动通知已开启</string>
-    <string name="heads_up_disabled">浮动通知已关闭</string>
+    <string name="heads_up_enabled">Спливаючі повідомлення увімкнено</string>
+    <string name="heads_up_disabled">Спливаючі повідомлення вимкнено</string>
 
     <!-- Quick settings -->
-    <string name="quick_settings_battery_saver">电池节能</string>
-    <string name="quick_settings_battery_saver_off">关闭节电</string>
-    <string name="quick_settings_brightness">亮度</string>
-    <string name="quick_settings_expanded_desktop">扩展桌面</string>
-    <string name="quick_settings_expanded_desktop_off">普通桌面</string>
-    <string name="quick_settings_screen_off">关闭屏幕</string>
-    <string name="quick_settings_screenshot">屏幕截图</string>
-    <string name="quick_settings_sync">数据同步</string>
-    <string name="quick_settings_sync_off">关闭同步</string>
+    <string name="quick_settings_battery_saver">Зберігання батареї</string>
+    <string name="quick_settings_battery_saver_off">Зберігання батареї вимкнено</string>
+    <string name="quick_settings_brightness">Яскравість</string>
+    <string name="quick_settings_expanded_desktop">Розширений</string>
+    <string name="quick_settings_expanded_desktop_off">Звичайний</string>
+    <string name="quick_settings_screen_off">Засинання</string>
+    <string name="quick_settings_screenshot">Скріншот</string>
+    <string name="quick_settings_sync">Синхронізація</string>
+    <string name="quick_settings_sync_off">Синхронізацію вимкнено</string>
 </resources>

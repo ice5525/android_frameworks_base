@@ -27,4 +27,21 @@
     <!-- label for screen record item in phone options dialog -->
     <string name="global_action_screen_record">Nagrywanie ekranu</string>
 
+    <!-- AOKP custom system animations -->
+    <string name="animation_fade">Zanikanie</string>
+    <string name="animation_slide_right">Przesuń w prawo</string>
+    <string name="animation_slide_left">Przesuń w lewo</string>
+    <string name="animation_slide_right_no_fade">Przesuń w prawo (Bez zanikania)</string>
+    <string name="animation_slide_left_no_fade">Przesuń w lewo (Bez zanikania)</string>
+    <string name="animation_slide_up">Przesuń w dół</string>
+    <string name="animation_slide_down">Przesuń w górę</string>
+    <string name="animation_default">Domyślne</string>
+    <string name="animation_translucent">Półprzezroczystość</string>
+    <string name="animation_grow_shrink">Rośnięcie (Góra)</string>
+    <string name="animation_grow_shrink_center">Rośnięcie (Środek)</string>
+    <string name="animation_grow_shrink_bottom">Rośnięcie (Dół)</string>
+    <string name="animation_grow_shrink_left">Rośnięcie (Lewo)</string>
+    <string name="animation_grow_shrink_right">Rośnięcie (Prawo)</string>
+    <string name="action_null">Pusty</string>
+
 </resources>

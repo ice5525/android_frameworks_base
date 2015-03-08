@@ -24,4 +24,15 @@
     <!-- Heads up toast -->
     <string name="heads_up_enabled">Wyskakujące powiadomienia są włączone</string>
     <string name="heads_up_disabled">Wyskakujące powiadomienia są wyłączone</string>
+
+    <!-- Quick settings -->
+    <string name="quick_settings_battery_saver">Oszczędzanie baterii</string>
+    <string name="quick_settings_battery_saver_off">Oszczędzanie baterii jest wyłączne</string>
+    <string name="quick_settings_brightness">Jasność</string>
+    <string name="quick_settings_expanded_desktop">Rozszerzony</string>
+    <string name="quick_settings_expanded_desktop_off">Normalny</string>
+    <string name="quick_settings_screen_off">Wyłącz ekran</string>
+    <string name="quick_settings_screenshot">Zrzut ekranu</string>
+    <string name="quick_settings_sync">Synchronizacja</string>
+    <string name="quick_settings_sync_off">Synchronizacja jest wyłączona</string>
 </resources>
