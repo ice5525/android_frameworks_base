@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/* //device/apps/common/assets/res/any/strings.xml
+**
+** Copyright 2014, Euphoria-OS Project
+** Copyright 2013, The ChameleonOS Open Source Project
+**
+** Licensed under the Apache License, Version 2.0 (the "License");
+** you may not use this file except in compliance with the License.
+** You may obtain a copy of the License at
+**
+**     http://www.apache.org/licenses/LICENSE-2.0
+**
+** Unless required by applicable law or agreed to in writing, software
+** distributed under the License is distributed on an "AS IS" BASIS,
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+** See the License for the specific language governing permissions and
+** limitations under the License.
+*/
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permlab_recordScreen">Відображати вміст запису</string>
+    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+    <string name="permdesc_recordScreen">Дозволити програмі писати екран користувача</string>
+
+    <!-- label for screen record item in phone options dialog -->
+    <string name="global_action_screen_record">Запис екрану</string>
+
+    <!-- AOKP custom system animations -->
+    <string name="animation_fade">Блякнути</string>
+    <string name="animation_slide_right">Ковзання праворуч</string>
+    <string name="animation_slide_left">Ковзання ліворуч</string>
+    <string name="animation_slide_right_no_fade">Ковзання праворуч (не блякнути)</string>
+    <string name="animation_slide_left_no_fade">Ковзання ліворуч (не блякнути)</string>
+    <string name="animation_slide_up">Ковзання знизу</string>
+    <string name="animation_slide_down">Ковзання зверху</string>
+    <string name="animation_default">за умовчанням</string>
+    <string name="animation_translucent">Напівпрозоро</string>
+    <string name="animation_grow_shrink">Зростання (Зверху)</string>
+    <string name="animation_grow_shrink_center">Зростання (В середині)</string>
+    <string name="animation_grow_shrink_bottom">Зростання (Знизу)</string>
+    <string name="animation_grow_shrink_left">Зростання (Ліворуч)</string>
+    <string name="animation_grow_shrink_right">Зростання (Праворуч)</string>
+    <string name="action_null">Порожньо</string>
+
+</resources>

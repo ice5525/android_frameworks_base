@@ -22,17 +22,17 @@
     <string name="accessibility_data_connection_HP">HSPA+</string>
 
     <!-- Heads up toast -->
-    <string name="heads_up_enabled">Wyskakujące powiadomienia są włączone</string>
-    <string name="heads_up_disabled">Wyskakujące powiadomienia są wyłączone</string>
+    <string name="heads_up_enabled">Спливаючі повідомлення увімкнено</string>
+    <string name="heads_up_disabled">Спливаючі повідомлення вимкнено</string>
 
     <!-- Quick settings -->
-    <string name="quick_settings_battery_saver">Oszczędzanie baterii</string>
-    <string name="quick_settings_battery_saver_off">Oszczędzanie baterii jest wyłączne</string>
-    <string name="quick_settings_brightness">Jasność</string>
-    <string name="quick_settings_expanded_desktop">Rozszerzony</string>
-    <string name="quick_settings_expanded_desktop_off">Normalny</string>
-    <string name="quick_settings_screen_off">Wyłącz ekran</string>
-    <string name="quick_settings_screenshot">Zrzut ekranu</string>
-    <string name="quick_settings_sync">Synchronizacja</string>
-    <string name="quick_settings_sync_off">Synchronizacja jest wyłączona</string>
+    <string name="quick_settings_battery_saver">Зберігання батареї</string>
+    <string name="quick_settings_battery_saver_off">Зберігання батареї вимкнено</string>
+    <string name="quick_settings_brightness">Яскравість</string>
+    <string name="quick_settings_expanded_desktop">Розширений</string>
+    <string name="quick_settings_expanded_desktop_off">Звичайний</string>
+    <string name="quick_settings_screen_off">Засинання</string>
+    <string name="quick_settings_screenshot">Скріншот</string>
+    <string name="quick_settings_sync">Синхронізація</string>
+    <string name="quick_settings_sync_off">Синхронізацію вимкнено</string>
 </resources>
