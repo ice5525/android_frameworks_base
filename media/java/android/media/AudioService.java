@@ -3503,34 +3503,18 @@ public class AudioService extends IAudioService.Stub {
                         Log.v(TAG, "getActiveStreamType: Forcing STREAM_NOTIFICATION b/c default setting");
                     return AudioSystem.STREAM_NOTIFICATION;
                 }
-            } else {
-                if (isAfMusicActiveRecently(StreamOverride.sDelayMs)) {
-                    if (DEBUG_VOL) Log.v(TAG, "getActiveStreamType: forcing STREAM_MUSIC");
+            } else if (isAfMusicActiveRecently(StreamOverride.sDelayMs)) {
+                if (DEBUG_VOL) Log.v(TAG, "getActiveStreamType: forcing STREAM_MUSIC");
                     return AudioSystem.STREAM_MUSIC;
                 } else {
                     if (DEBUG_VOL) Log.v(TAG,
                             "getActiveStreamType: using STREAM_NOTIFICATION as default");
                     return AudioSystem.STREAM_NOTIFICATION;
-                }
             }
         }
-        if (suggestedStreamType == AudioManager.USE_DEFAULT_STREAM_TYPE) {
-            switch (mVolumeKeysDefault) {
-                case AudioSystem.STREAM_DEFAULT:
-                    if (DEBUG_VOL)
-                        Log.v(TAG, "getActiveStreamType: Forcing STREAM_DEFAULT b/c default setting");
-                    return AudioSystem.STREAM_DEFAULT;
-                case AudioSystem.STREAM_MUSIC:
-                default:
-                    if (DEBUG_VOL)
-                        Log.v(TAG, "getActiveStreamType: Forcing STREAM_MUSIC b/c default setting");
-                    return AudioSystem.STREAM_MUSIC;
-            }
-        } else {
-            if (DEBUG_VOL) Log.v(TAG, "getActiveStreamType: Returning suggested type "
-                    + suggestedStreamType);
-            return suggestedStreamType;
-        }
+        if (DEBUG_VOL) Log.v(TAG, "getActiveStreamType: Returning suggested type "
+                + suggestedStreamType);
+        return suggestedStreamType;
     }
 
     private void broadcastRingerMode(String action, int ringerMode) {
