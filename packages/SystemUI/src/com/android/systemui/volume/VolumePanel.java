@@ -189,8 +189,6 @@ public class VolumePanel extends Handler implements DemoMode {
     /** All the slider controls mapped by stream type */
     private SparseArray<StreamControl> mStreamControls;
     private final AccessibilityManager mAccessibilityManager;
-    private final SecondaryIconTransition mSecondaryIconTransition;
-    private final IconPulser mIconPulser;
 
     private enum StreamResources {
         BluetoothSCOStream(AudioManager.STREAM_BLUETOOTH_SCO,
@@ -271,8 +269,6 @@ public class VolumePanel extends Handler implements DemoMode {
         ImageView icon;
         SeekBar seekbarView;
         TextView suppressorView;
-        View divider;
-        ImageView secondaryIcon;
         int iconRes;
         int iconMuteRes;
         int iconSuppressedRes;
@@ -379,8 +375,6 @@ public class VolumePanel extends Handler implements DemoMode {
         mAudioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
         mAccessibilityManager = (AccessibilityManager) context.getSystemService(
                 Context.ACCESSIBILITY_SERVICE);
-        mSecondaryIconTransition = new SecondaryIconTransition();
-        mIconPulser = new IconPulser(context);
 
         // For now, only show master volume if master volume is supported
         final Resources res = context.getResources();
@@ -425,7 +419,6 @@ public class VolumePanel extends Handler implements DemoMode {
                     mAudioManager.forceVolumeControlStream(mActiveStreamType);
                     setZenPanelVisible(false);
                     mDemoIcon = 0;
-                    mSecondaryIconTransition.cancel();
                 }
             });
 
@@ -743,23 +736,6 @@ public class VolumePanel extends Handler implements DemoMode {
             sc.suppressorView =
                     (TextView) sc.group.findViewById(com.android.systemui.R.id.suppressor);
             sc.suppressorView.setVisibility(View.GONE);
-            final boolean showSecondary = !isNotification && notificationStream.show;
-            sc.divider = sc.group.findViewById(com.android.systemui.R.id.divider);
-            sc.secondaryIcon = (ImageView) sc.group
-                    .findViewById(com.android.systemui.R.id.secondary_icon);
-            sc.secondaryIcon.setImageResource(com.android.systemui.R.drawable.ic_ringer_audible);
-            sc.secondaryIcon.setContentDescription(res.getString(notificationStream.descRes));
-            sc.secondaryIcon.setClickable(showSecondary);
-            sc.divider.setVisibility(showSecondary ? View.VISIBLE : View.GONE);
-            sc.secondaryIcon.setVisibility(showSecondary ? View.VISIBLE : View.GONE);
-            if (showSecondary) {
-                sc.secondaryIcon.setOnClickListener(new OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mSecondaryIconTransition.start(sc);
-                    }
-                });
-            }
             sc.expandPanel = (ImageView)
                     sc.group.findViewById(com.android.systemui.R.id.further_options);
             sc.expandPanel.setClickable(true);
@@ -922,10 +898,7 @@ public class VolumePanel extends Handler implements DemoMode {
                 muted = false;
             }
         }
-        sc.icon.setImageResource(mDemoIcon != 0 ? mDemoIcon
-                : suppressor != null ? sc.iconSuppressedRes
-                : muted ? sc.iconMuteRes
-                : sc.iconRes);
+        sc.icon.setImageResource(muted ? sc.iconMuteRes : sc.iconRes);
     }
 
     private void updateSliderSuppressor(StreamControl sc) {
@@ -1031,7 +1004,6 @@ public class VolumePanel extends Handler implements DemoMode {
     private void showVibrateHint() {
         final StreamControl active = mStreamControls.get(mActiveStreamType);
         if (active != null) {
-            mIconPulser.start(active.icon);
             if (!hasMessages(MSG_VIBRATE)) {
                 sendEmptyMessageDelayed(MSG_VIBRATE, VIBRATE_DELAY);
             }
@@ -1052,8 +1024,7 @@ public class VolumePanel extends Handler implements DemoMode {
     }
 
     private void updateTimeoutDelay() {
-        mTimeoutDelay = mDemoIcon != 0 ? TIMEOUT_DELAY_EXPANDED
-                : sSafetyWarning != null ? TIMEOUT_DELAY_SAFETY_WARNING
+        mTimeoutDelay = sSafetyWarning != null ? TIMEOUT_DELAY_SAFETY_WARNING
                 : mZenPanelExpanded ? TIMEOUT_DELAY_EXPANDED
                 : isZenPanelVisible() ? TIMEOUT_DELAY_COLLAPSED
                 : TIMEOUT_DELAY;
@@ -1346,12 +1317,6 @@ public class VolumePanel extends Handler implements DemoMode {
             final boolean muted = isMuted(streamType);
             updateSliderEnabled(sc, muted, (flags & AudioManager.FLAG_FIXED_VOLUME) != 0);
             if (isNotificationOrRing(streamType)) {
-                // check for secondary-icon transition completion
-                if (mSecondaryIconTransition.isRunning()) {
-                    mSecondaryIconTransition.cancel();  // safe to reset
-                    sc.seekbarView.setAlpha(0); sc.seekbarView.animate().alpha(1);
-                    mZenPanel.setAlpha(0); mZenPanel.animate().alpha(1);
-                }
                 updateSliderIcon(sc, muted);
             }
         }
@@ -1783,82 +1748,6 @@ public class VolumePanel extends Handler implements DemoMode {
             onRemoteVolumeUpdateIfShown();
         }
     };
-
-    private final class SecondaryIconTransition extends AnimatorListenerAdapter
-            implements Runnable {
-        private static final int ANIMATION_TIME = 400;
-        private static final int WAIT_FOR_SWITCH_TIME = 1000;
-
-        private final int mAnimationTime = (int)(ANIMATION_TIME * ValueAnimator.getDurationScale());
-        private final int mFadeOutTime = mAnimationTime / 2;
-        private final int mDelayTime = mAnimationTime / 3;
-
-        private final Interpolator mIconInterpolator =
-                AnimationUtils.loadInterpolator(mContext, android.R.interpolator.fast_out_slow_in);
-
-        private StreamControl mTarget;
-
-        public void start(StreamControl sc) {
-            if (sc == null) throw new IllegalArgumentException();
-            if (LOGD) Log.d(mTag, "Secondary icon animation start");
-            if (mTarget != null) {
-                cancel();
-            }
-            mTarget = sc;
-            mTimeoutDelay = mAnimationTime + WAIT_FOR_SWITCH_TIME;
-            resetTimeout();
-            mTarget.secondaryIcon.setClickable(false);
-            final int N = mTarget.group.getChildCount();
-            for (int i = 0; i < N; i++) {
-                final View child = mTarget.group.getChildAt(i);
-                if (child != mTarget.secondaryIcon) {
-                    child.animate().alpha(0).setDuration(mFadeOutTime).start();
-                }
-            }
-            mTarget.secondaryIcon.animate()
-                    .translationXBy(mTarget.icon.getX() - mTarget.secondaryIcon.getX())
-                    .setInterpolator(mIconInterpolator)
-                    .setStartDelay(mDelayTime)
-                    .setDuration(mAnimationTime - mDelayTime)
-                    .setListener(this)
-                    .start();
-        }
-
-        public boolean isRunning() {
-            return mTarget != null;
-        }
-
-        public void cancel() {
-            if (mTarget == null) return;
-            mTarget.secondaryIcon.setClickable(true);
-            final int N = mTarget.group.getChildCount();
-            for (int i = 0; i < N; i++) {
-                final View child = mTarget.group.getChildAt(i);
-                if (child != mTarget.secondaryIcon) {
-                    child.animate().cancel();
-                    child.setAlpha(1);
-                }
-            }
-            mTarget.secondaryIcon.animate().cancel();
-            mTarget.secondaryIcon.setTranslationX(0);
-            mTarget = null;
-        }
-
-        @Override
-        public void onAnimationEnd(Animator animation) {
-            if (mTarget == null) return;
-            AsyncTask.execute(this);
-        }
-
-        @Override
-        public void run() {
-            if (mTarget == null) return;
-            if (LOGD) Log.d(mTag, "Secondary icon animation complete, show notification slider");
-            mAudioManager.forceVolumeControlStream(StreamResources.NotificationStream.streamType);
-            mAudioManager.adjustStreamVolume(StreamResources.NotificationStream.streamType,
-                    AudioManager.ADJUST_SAME, AudioManager.FLAG_SHOW_UI);
-        }
-    }
 
     public interface Callback {
         void onZenSettings();
