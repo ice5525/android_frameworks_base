@@ -28,7 +28,6 @@ import android.content.pm.PackageManager;
 import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.net.Uri;
-import android.os.UserHandle;
 import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -542,18 +541,6 @@ public class TaskStackView extends FrameLayout implements TaskStack.TaskStackCal
         tv.dismissTask(0L);
     }
 
-    /** Resets the focused task. */
-    void resetFocusedTask() {
-        if ((0 <= mFocusedTaskIndex) && (mFocusedTaskIndex < mStack.getTaskCount())) {
-            Task t = mStack.getTasks().get(mFocusedTaskIndex);
-            TaskView tv = getChildViewForTask(t);
-            if (tv != null) {
-                tv.unsetFocusedTask();
-            }
-        }
-        mFocusedTaskIndex = -1;
-    }
-
     private boolean dismissAll() {
         return Settings.System.getInt(mContext.getContentResolver(),
             Settings.System.RECENTS_CLEAR_ALL_DISMISS_ALL, 1) == 1;
@@ -594,12 +581,20 @@ public class TaskStackView extends FrameLayout implements TaskStack.TaskStackCal
                         }
                     }
                 }
-
-                // And remove all the excluded or all the other tasks
-                SystemServicesProxy ssp = RecentsTaskLoader.getInstance().getSystemServicesProxy();
-                ssp.removeAllUserTask(UserHandle.myUserId());
             }
         });
+    }
+
+    /** Resets the focused task. */
+    void resetFocusedTask() {
+        if ((0 <= mFocusedTaskIndex) && (mFocusedTaskIndex < mStack.getTaskCount())) {
+            Task t = mStack.getTasks().get(mFocusedTaskIndex);
+            TaskView tv = getChildViewForTask(t);
+            if (tv != null) {
+                tv.unsetFocusedTask();
+            }
+        }
+        mFocusedTaskIndex = -1;
     }
 
     @Override
