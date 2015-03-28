@@ -110,12 +110,14 @@ public class KeyguardStatusBarView extends RelativeLayout {
             removeView(mMultiUserSwitch);
         }
 
-        if (mShowCarrierLabel == 1) {
-            mCarrierLabel.setVisibility(View.VISIBLE);
-        } else if (mShowCarrierLabel == 3) {
-            mCarrierLabel.setVisibility(View.VISIBLE);
-        } else {
-            mCarrierLabel.setVisibility(View.GONE);
+        if (mCarrierLabel != null) {
+            if (mShowCarrierLabel == 1) {
+                mCarrierLabel.setVisibility(View.VISIBLE);
+            } else if (mShowCarrierLabel == 3) {
+                mCarrierLabel.setVisibility(View.VISIBLE);
+            } else {
+                mCarrierLabel.setVisibility(View.GONE);
+            }
         }
 
         mBatteryLevel.setVisibility(View.VISIBLE);
