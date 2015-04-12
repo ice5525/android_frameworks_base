@@ -2333,8 +2333,10 @@ public class AudioService extends IAudioService.Stub {
             }
             int streamType = getActiveStreamType(AudioManager.USE_DEFAULT_STREAM_TYPE);
             int device = getDeviceForStream(streamType);
-            int index = mStreamStates[mStreamVolumeAlias[streamType]].getIndex(device);
-            setStreamVolumeInt(mStreamVolumeAlias[streamType], index, device, true);
+            if (mVolumeKeysDefault != -1) {
+                int index = mStreamStates[mStreamVolumeAlias[streamType]].getIndex(device);
+                setStreamVolumeInt(mStreamVolumeAlias[streamType], index, device, true);
+            }
 
             updateStreamVolumeAlias(true /*updateVolumes*/);
         }
