@@ -3442,14 +3442,6 @@ public final class Settings {
         public static final String STATUS_BAR_SHOW_BATTERY_PERCENT = "status_bar_show_battery_percent";
 
         /**
-         * Visibility of SIM icons of unpopulated SIM slots in MSIM mode
-         * 0: Hide unpopulated SIM icons
-         * 1: Show unpopulated SIM icons
-         * @hide
-         */
-        public static final String STATUS_BAR_MSIM_SHOW_EMPTY_ICONS = "status_bar_show_empty_sims";
-
-        /**
          * Status bar carrier label
          * 0: Hide
          * 1: Display on keyguard status bar
@@ -3498,12 +3490,6 @@ public final class Settings {
          * @hide
          */
         public static final String RECENTS_SHOW_SEARCH_BAR = "recents_show_search_bar";
-
-        /**
-         * Show mobile/wifi activity icons in statusbar bar
-         * @hide
-         */
-        public static final String STATUS_BAR_SHOW_DATA_ACTIVITY = "status_bar_show_data_activity";
 
         /**
          * Network traffic indicator, goes from least to greatest significant bitwise
