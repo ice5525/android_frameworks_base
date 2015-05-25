@@ -2291,12 +2291,6 @@ public final class Settings {
         public static final String VIBRATE_INPUT_DEVICES = "vibrate_input_devices";
 
         /**
-         * Empty volume.
-         * @hide
-         */
-        public static final String VOLUME_DEFAULT = "volume_default";
-
-        /**
          * Ringer volume. This is used internally, changing this value will not
          * change the volume. See AudioManager.
          */
@@ -3870,14 +3864,6 @@ public final class Settings {
          * @hide
          */
         public static final String DOZE_AUTO_BRIGHTNESS = "doze_auto_brightness";
-
-        /**
-
-         * Volume key controls ringtone or media sound stream
-         *
-         * @hide
-         */
-        public static final String VOLUME_KEYS_DEFAULT = "volume_keys_default";
 
         /**
          * Force expanded notifications on all apps that support it.
