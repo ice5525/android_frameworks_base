@@ -42,4 +42,6 @@
     <string name="tasklist_killall">Закрыть все</string>
     <string name="tasklist_memory_usage" formatted="false">Доступно/Всего памяти: %s / %s</string>
     <string name="message_keep_one_launcher">Требуется хотя бы один работающий лаунчер!</string>
+    <!-- Mixed -->
+    <string name="navbar_power_button">Кнопка питания</string>
 </resources>
