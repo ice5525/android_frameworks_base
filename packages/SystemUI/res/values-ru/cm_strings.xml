@@ -103,5 +103,4 @@
   <string name="dynamic_qs_tile_next_alarm_label">След. будильник</string>
   <string name="dynamic_qs_tile_ime_selector_label">Выбор IME</string>
   <string name="dynamic_qs_tile_su_label">Root-доступ</string>
-  <string name="navbar_power_button">Кнопка питания</string>
 </resources>
